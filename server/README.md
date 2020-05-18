@@ -1,4 +1,4 @@
-# Chatsapp  [![Build Status](https://travis-ci.org/shreyasseshadri/chatsapp.svg?branch=master)](https://travis-ci.org/shreyasseshadri/chatsapp)
+# Chat-app 
 
 TODO List:
 
@@ -6,5 +6,5 @@ TODO List:
 - [x] Register `/register`
 - [x] Session maintaining, authentication `maintaned by passport.js`
 - [x] <b>Message exchange between users</b>
-- [ ] Dealing with more complicated cases ( Like when user is not online etc..)
-- [ ] Read Reciepts
+- [x] Dealing with more complicated cases ( Like when user is not online etc..)
+- [ ] Read Reciepts (Additional feature)
