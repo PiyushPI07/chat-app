@@ -29,14 +29,14 @@ async function getMessagesFromId(ids){
 }
 
 router.ws("/",function(ws,req){
-    console.log("inside router.ws of message.ws")
+    // console.log("inside router.ws of message.ws")
     console.log('Connection eshtablished');
     if(!req.isAuthenticated()){
         ws.terminate();
         return;
     
     }
-    console.log("req authenticated from message.js")
+    // console.log("req authenticated from message.js")
     ws.user = req.user;
     clients[req.user.phone] = ws;
 
@@ -55,7 +55,7 @@ router.ws("/",function(ws,req){
     console.log('Clients: '+Object.keys(clients));
     ws.on("message",(msg)=> {
         msg = JSON.parse(msg);
-        console.log(msg);
+        // console.log(msg);
         if(!msg.to || !msg.from || !msg.timestamp ||!msg.type || 
             !users.includes(msg.from) || !users.includes(msg.to))
         {
