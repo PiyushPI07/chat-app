@@ -11,5 +11,5 @@ TODO List:
 - [x] Session maintaining, authentication `maintaned by passport.js`
 - [x] Message exchange between users
 - [x] Dealing with more complicated cases ( Like when user is not online etc..)
-- [x] Read Reciepts
+- [] Read Reciepts
 
