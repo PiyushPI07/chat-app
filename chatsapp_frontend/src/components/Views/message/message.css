@@ -1,0 +1,10 @@
+.msgbox{
+  height:500px;
+  padding: 5% 0;
+  overflow: auto;
+  flex: auto;
+}
+.msgbox::-webkit-scrollbar {
+     width: 0 !important;
+    display: none;
+    }

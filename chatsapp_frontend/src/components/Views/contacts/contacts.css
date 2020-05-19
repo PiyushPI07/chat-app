@@ -1,0 +1,18 @@
+.scrollbox{
+  height: 600px;
+  padding: 5% 0;
+  overflow: auto;
+  flex: auto;
+
+}
+.contact-div::-webkit-scrollbar { width: 0 !important }
+
+
+.contact-div{
+  height:600px;
+  padding: 5% 0;
+  overflow: auto;
+  flex: auto;
+}
+
+

@@ -79,12 +79,15 @@ var registerRouter = require('./routes/register');
 var authRouter = require("./routes/auth");
 var infoRouter = require("./routes/info");
 var messageRouter = require("./routes/message");
+var contactRouter = require("./routes/contacts")
 
 app.use('/message',messageRouter);
 app.use('/', indexRouter);
 app.use('/register', registerRouter);
 app.use('/auth',authRouter);
 app.use('/self',infoRouter);
+app.use('/contacts',contactRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(err,req, res, next) {

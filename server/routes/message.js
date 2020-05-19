@@ -106,6 +106,18 @@ router.ws("/",function(ws,req){
     }.bind(null, ws));
 
 });
+router.post("/history", (req, res) => {
+    if (!req.isAuthenticated()) {
+        res.status(401).send("Unauthorized request!");
+        return;
+    }
+    const { from, to } = req.body;
+    getHistory(from, to).then((msgs) => {
+        msgs.sort((a, b) => { return a.timestamp - b.timestamp });
+        res.send(JSON.stringify(msgs));
+    })
+
+})
 
 router.get("/history",function(req,res,next){
     console.log(req);

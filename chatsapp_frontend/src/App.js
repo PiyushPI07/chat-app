@@ -1,19 +1,19 @@
 import React, { Component} from 'react';
 import './App.css'
 import {Route, BrowserRouter} from 'react-router-dom'
-import Home from './components/Views/Home'
 import Signin from './components/Views/Signin'
 import Signup from './components/Views/Signup'
 import NavBar from './components/NavBar'
 import Message from './components/Views/Message'
-import Message2 from './components/Views/Message2'
+import Chat from './components/Views/chat/Chat'
+import Contacts from './components/Views/contacts/Contacts'
 import cors from 'cors'
 
 class App extends Component {
   render(){
     return(
       <BrowserRouter>
-        <NavBar/>
+        {/* <NavBar/> */}
         {/* <Route path='/'>
           <Message2/>
         </Route> */}
@@ -28,8 +28,9 @@ class App extends Component {
         </Route>
 
         <Route path = "/message">
-          <Message/>
+          <Chat/>
         </Route>
+
 
       </BrowserRouter>
      
