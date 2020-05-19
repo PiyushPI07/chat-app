@@ -12,6 +12,7 @@ Backend:
 - [x] Session maintaining, authentication `maintaned by passport.js`
 - [x] Message exchange between users
 - [x] Dealing with more complicated cases ( Like when user is not online etc..)
+- [x] `/history` route for chatting history of two users.
 - [ ] Read Reciepts (additional feature)
 
 Frontend:
