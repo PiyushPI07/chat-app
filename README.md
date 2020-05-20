@@ -19,6 +19,7 @@ Frontend:
 - [x] Login, Register components for `/auth/login` and `/register` respectively.
 - [x] Temporary component for `/message` route.
 - [x] Connecting frontend components with backend Endpoints.
+- [x] Added Redux flux architecture to the front-end for state managment.
 - [ ] Building final user friendly UI.
 
 # Instructions to run:
