@@ -7,33 +7,42 @@ import NavBar from './components/NavBar'
 import Message from './components/Views/Message'
 import Chat from './components/Views/chat/Chat'
 import Contacts from './components/Views/contacts/Contacts'
-import cors from 'cors'
+import {Provider} from 'react-redux';
+import {ConfigureStore} from './redux/configureStore';
+
+const store = ConfigureStore();
+
+
+
+
 
 class App extends Component {
   render(){
     return(
-      <BrowserRouter>
-        {/* <NavBar/> */}
-        {/* <Route path='/'>
+      <Provider store = {store}>
+        <BrowserRouter>
+          <NavBar/>
+          {/* <Route path='/'>
           <Message2/>
         </Route> */}
-        
-
-        <Route path = "/signup" >
-          <Signup/>
-        </Route>
-
-        <Route path = "/signin" >
-          <Signin/>
-        </Route>
-
-        <Route path = "/message">
-          <Chat/>
-        </Route>
 
 
-      </BrowserRouter>
-     
+          <Route path="/signup" >
+            <Signup />
+          </Route>
+
+          <Route path="/signin" >
+            <Signin />
+          </Route>
+
+          <Route path="/message">
+            <Chat />
+          </Route>
+
+
+        </BrowserRouter>
+      </Provider>
+           
     )
   }
 }

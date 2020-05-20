@@ -6,7 +6,15 @@ import Message from '../message/Message'
 import Inputmsg from '../input/Input'
 import Contacts from '../contacts/Contacts'
 import Infobar from '../infobar/Infobar'
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
+const mapStateToProps = state => {
+    return {
+        reciepient: state.reciepient,
+        message: state.message
+    }
+}
 
 class Chat extends Component{
 
@@ -14,8 +22,8 @@ class Chat extends Component{
         super(props);
         this.state = {
             userLoggedIn: null,
-            reciepient: null,
-            message: null,
+            // reciepient: null,
+            // message: null,
         };
         this.handler = this.handler.bind(this);
         this.server = "http://localhost:5000/";
@@ -125,4 +133,4 @@ class Chat extends Component{
 }
 
 
-export default Chat;
+export default withRouter(connect(mapStateToProps)(Chat));

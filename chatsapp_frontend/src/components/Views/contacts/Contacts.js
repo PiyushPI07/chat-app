@@ -3,7 +3,20 @@ import {Container, ContainerProps ,Card, CardTitle } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import './contacts.css'
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import {updateReciepient} from '../../../redux/actionCreator';
 
+const mapStateToProps = state => {
+    return {
+        reciepient: state.reciepient,
+        message: state.message
+    }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    updateReciepient: (reciepientName) => dispatch(updateReciepient(reciepientName))
+})
 
 class Contacts extends Component{
     constructor() {
@@ -29,7 +42,8 @@ class Contacts extends Component{
     render() {
         const contact = this.state.list.map((user) => {
             return (
-                    <Card >
+                    <Card onClick = {
+                        async() => {await this.props.updateReciepient(user.username); console.log(this.props.reciepient)}}>
                         <CardTitle key = {user.id}>{user.username}</CardTitle>
                     </Card>
 
@@ -48,4 +62,4 @@ class Contacts extends Component{
 }
 
 
-export default Contacts;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Contacts));
