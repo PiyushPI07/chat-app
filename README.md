@@ -20,7 +20,8 @@ Frontend:
 - [x] Temporary component for `/message` route.
 - [x] Connecting frontend components with backend Endpoints.
 - [x] Added Redux flux architecture to the front-end for state managment.
-- [ ] Building final user friendly UI.
+- [X] Building final user friendly UI.
+- [ ] Styling UI and final touch-ups.
 
 # Instructions to run:
 - Fork/download the repository.
