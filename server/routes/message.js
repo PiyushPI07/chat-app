@@ -8,8 +8,8 @@ var path  = require('path');
 const users = [];
 console.log("all users: ", users);
 
-Users.find({},{phone:1},(err,res)=> {
-    res.map((usr) => {users.push(usr.phone);});
+Users.find({},{username:1},(err,res)=> {
+    res.map((usr) => {users.push(usr.username);});
 });
 
 var clients = {};
@@ -38,15 +38,16 @@ router.ws("/",function(ws,req){
     }
     // console.log("req authenticated from message.js")
     ws.user = req.user;
-    clients[req.user.phone] = ws;
+    clients[req.user.username] = ws;
+    console.log(users)
 
 
-    if(undeliveredMessages[ws.user.phone]){
-        getMessagesFromId(undeliveredMessages[ws.user.phone]).then((msgs) => {
+    if(undeliveredMessages[ws.user.username]){
+        getMessagesFromId(undeliveredMessages[ws.user.username]).then((msgs) => {
 
-            if(clients[ws.user.phone]){
-                clients[ws.user.phone].send(JSON.stringify(msgs));
-                delete undeliveredMessages[ws.user.phone];
+            if(clients[ws.user.username]){
+                clients[ws.user.username].send(JSON.stringify(msgs));
+                delete undeliveredMessages[ws.user.username];
                 console.log("After Delivered "+ JSON.stringify(undeliveredMessages));
             }
         });
@@ -55,7 +56,7 @@ router.ws("/",function(ws,req){
     console.log('Clients: '+Object.keys(clients));
     ws.on("message",(msg)=> {
         msg = JSON.parse(msg);
-        // console.log(msg);
+        console.log(msg);
         if(!msg.to || !msg.from || !msg.timestamp ||!msg.type || 
             !users.includes(msg.from) || !users.includes(msg.to))
         {
@@ -99,8 +100,8 @@ router.ws("/",function(ws,req){
     });
 
     ws.on("close", function (ws, event) {
-        if (clients[ws.user.phone] != null) {
-            delete clients[ws.user.phone];
+        if (clients[ws.user.username] != null) {
+            delete clients[ws.user.username];
         }
         console.log('After deleting: ',Object.keys(clients));
     }.bind(null, ws));
@@ -112,7 +113,8 @@ router.post("/history", (req, res) => {
         return;
     }
     const { from, to } = req.body;
-    getHistory(from, to).then((msgs) => {
+    console.log(req.body)
+    getHistory([from, to], [from, to]).then((msgs) => {
         msgs.sort((a, b) => { return a.timestamp - b.timestamp });
         res.send(JSON.stringify(msgs));
     })

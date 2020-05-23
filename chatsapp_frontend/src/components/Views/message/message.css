@@ -1,6 +1,6 @@
 .msgbox{
-  height:500px;
-  padding: 5% 0;
+  height:600px;
+  padding: 0 0;
   overflow: auto;
   flex: auto;
 }
@@ -8,3 +8,14 @@
      width: 0 !important;
     display: none;
     }
+
+.msg-from-client{
+  background-color: teal;
+  margin-left: 66% !important;
+  margin-right: 10px !important;
+}
+
+
+.msg-to-client{
+  background-color: darkgray;
+}

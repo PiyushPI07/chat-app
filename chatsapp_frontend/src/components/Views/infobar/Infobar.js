@@ -1,7 +1,6 @@
 import React, { useState, Component } from 'react';
-import { Col,} from 'reactstrap';
+import { Col, Navbar, NavbarBrand, NavbarText, Card } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import ScrollToBottom from 'react-scroll-to-bottom';
 
 
 class Infobar extends Component {
@@ -11,7 +10,9 @@ class Infobar extends Component {
 
     render(){
         return(
-        <Col md={5}>{this.props.username}</Col>
+            <nav className="navbar navbar-light bg-light">
+                <a className="navbar-brand text-secondar">{this.props.username}</a>
+            </nav>
         )
     }
 };

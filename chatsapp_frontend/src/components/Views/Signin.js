@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useHistory, Route,BrowserRouter} from 'react-router-dom';
 import M from 'materialize-css'
+import Chat from './chat/Chat'
+import Signup from './Signup'
+
 
 const Signin = () => {
 
@@ -61,6 +64,13 @@ const Signin = () => {
     
                     </button>
                     <Link to='/signup'>Dont have an account?</Link>
+
+{/* 
+                    <BrowserRouter>
+
+                    </BrowserRouter> */}
+
+
                 </div>
             
             

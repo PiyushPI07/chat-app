@@ -8,24 +8,29 @@ import Contacts from '../contacts/Contacts'
 import Infobar from '../infobar/Infobar'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { updateHistory } from "../../../redux/actionCreator";
 
 const mapStateToProps = state => {
     return {
         reciepient: state.reciepient,
-        message: state.message
+        message: state.message,
+        history: state.history,
+        // userLoggedIn: state.loggedInUser,
     }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+    updateHistory: (new_history) => dispatch(updateHistory(new_history)),
+})
 
 class Chat extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-            userLoggedIn: null,
-            // reciepient: null,
-            // message: null,
-        };
-        this.handler = this.handler.bind(this);
+            loggedInUser: "",
+        }
+
         this.server = "http://localhost:5000/";
         this.ws_server = "ws://localhost:5000/";
         this.ws = new WebSocket(this.ws_server + 'message');
@@ -33,9 +38,31 @@ class Chat extends Component{
         this.history = [];
     };
 
-    handler(user) {
-        this.setState({ reciepient:user});
+    async getHistory() {
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({ "from": this.props.reciepient, "to": this.state.loggedInUser });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow',
+            credentials: 'include'
+        };
+
+        await fetch("http://localhost:5000/message/history", requestOptions)
+            .then(response => response.json())
+            .then(async result => {
+                await this.props.updateHistory(result);
+                console.log("History from Input.js: ", this.props.history)
+            })
+            .catch(error => console.log('error', error));
+
     }
+
 
     async componentDidMount(){
 
@@ -44,6 +71,7 @@ class Chat extends Component{
         }
         this.ws.onmessage = (message) => {
             console.log(message.data);
+            this.getHistory();
         };
         await fetch(this.server + 'self', {
             method: 'GET',
@@ -53,40 +81,28 @@ class Chat extends Component{
             },
             credentials: 'include'
         }).then(resp => resp.json())
-            .then(data => {
+            .then(async data => {
                 console.log("data from fettch(/self): ", data);
-                this.setState({userLoggedIn: data.phone});
+                this.setState({loggedInUser:data.username})
+                // await this.props.updateLoggedInUser(data.username);
+                console.log("Loggedin User: ", this.state.loggedInUser)
+
             });
 
-            console.log("Loggedin User: ",this.state.userLoggedIn)
         
     }
 
-    async getHistory(){
-        await fetch(this.server + "message/history", {
-            method : "POST",
-            headers:{
-                'Accept' : 'application/json',
-                'Content-Type' : 'application/json'
-            },
-            body:JSON.stringify({
-                from: this.state.userLoggedIn,
-                to:this.state.reciepient
-            }),
-            credentials : 'include'
-        }).this(res => res.json())
-          .this(data => {
-              this.history = [...data];
-          })
-    }
+
 
 
     Sendmessage = () =>{
+        console.log("Sendmessage invoked")
+        console.log(this.props.message)
         let resp = JSON.stringify({
-            from:this.state.userLoggedIn ,
-            to: this.state.reciepient,
+            from:this.state.loggedInUser ,
+            to: this.props.reciepient,
             type: "text",
-            text: this.state.message,
+            text: this.props.message.text,
             timestamp: Date.now()
         });
         if (this.ws) {
@@ -106,21 +122,21 @@ class Chat extends Component{
 
     render() {
         return (
-            <div>
+            <div className="maindiv">
                 <Container fluid className="container  m-md-auto " >
                     <Row>
-                        <Col md={4}>
-                            <Contacts handler = {this.handler} />
+                        <Col xs={4}>
+                            <Contacts loggedinUser={this.state.loggedInUser}/>
                         </Col>
-                        <Col md={8}>
+                        <Col xs={8} className="infobar-row">
                             <Row>
-                            <Infobar username={this.state.userLoggedIn}/>
+                            <Infobar username={this.props.reciepient}/>
                         </Row>
-                        <Row>
-                            <Message/>
+                        <Row >
+                            <Message loggedInUser = {this.state.loggedInUser}/>
                         </Row>
                         <Row className="inputrow">
-                            <Inputmsg/>
+                            <Inputmsg sendmessage = {this.Sendmessage} loggedInUser = {this.state.loggedInUser}/>
                         </Row>
                         </Col>
                     </Row>
@@ -133,4 +149,4 @@ class Chat extends Component{
 }
 
 
-export default withRouter(connect(mapStateToProps)(Chat));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Chat));
