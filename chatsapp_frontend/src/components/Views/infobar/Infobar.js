@@ -1,20 +1,33 @@
-import React, { useState, Component } from 'react';
-import { Col, Navbar, NavbarBrand, NavbarText, Card } from 'reactstrap';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import { Navbar, Button ,} from 'react-bootstrap'
+import {Person} from '@material-ui/icons'
+import {useHistory} from 'react-router-dom'
+import './infobar.css'
 
 
-class Infobar extends Component {
-    constructor(props){
-        super(props);
-    };
+const Infobar = (props) => {
 
-    render(){
-        return(
-            <nav className="navbar navbar-light bg-light">
-                <a className="navbar-brand text-secondar">{this.props.username}</a>
-            </nav>
-        )
+    const history = useHistory()
+
+        
+    const logout = () => {
+        fetch("http://localhost:5000/auth/logout", {method: "GET"})
+            .then(data => {
+                history.push('/signin')
+            })
+            .catch(err => console.log(err))
     }
+
+
+        return(
+            <Navbar className="navbar">
+                <Person style={{fontSize: 50}}/>
+                <Navbar.Brand className="user">{props.username}</Navbar.Brand>
+                <Button className="logout" style={{float: "right", marginLeft:"500px"}}onClick = {() => logout()} >Logout</Button>
+            </Navbar>
+        )
+    
 };
 
 

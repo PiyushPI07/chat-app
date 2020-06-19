@@ -33,24 +33,46 @@ class Message extends Component{
 
     render(){
         const t_hstry = [...this.props.history];
-        console.log("hstry", this.state.hstry)
-        console.log("history", this.props.history)
-        
+        // console.log("hstry", this.state.hstry)
+        // console.log("history", this.props.history)
+        console.log("HIstory used to display", t_hstry)
         const history_messages = t_hstry.map((msg) => {
-            if(msg.from == this.props.loggedInUser){
-                return (
+            // console.log(msg)
+            if((msg.from == this.props.loggedInUser) && (msg.to == this.props.reciepient)){
+
+                if(msg.type == "img"){
+                    return(
+                        <Card key={msg.timestamp} className="img-from-client ">
+                            <img class="image" src={msg.enc} alt="video"/>
+                        </Card>
+                    )
+                }
+                {
+                    return(
                         <Card key={msg.timestamp} className="msg-from-client col-offset-left-8 col-4">
                             <CardBody> {msg.text} </CardBody>
-                        </Card>               
-                )
+                        </Card>
+                    )
+                }
+
 
             }
-            else if(msg.from == this.props.reciepient){
-                return (
-                    <Card key={msg.timestamp} className='msg-to-client col-offset-8 col-4'>
-                        <CardBody> {msg.text} </CardBody>
-                    </Card>
-                )
+            else if(msg.from == this.props.reciepient &&  msg.to == this.props.loggedInUser){
+                if(msg.type == "img"){
+                    return (
+                        <Card key={msg.timestamp} className='img-to-client '>
+                            <img class="image" src={msg.enc}  alt="video"/>
+                        </Card>
+                    )
+                }
+                {
+                    return (
+                        <Card key={msg.timestamp} className='msg-to-client col-offset-8 col-4'>
+                            <CardBody> {msg.text} </CardBody>
+                        </Card>
+                    )
+                }
+
             }
         })
 

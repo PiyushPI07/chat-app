@@ -4,6 +4,9 @@ var path  = require('path');
 var test = path.resolve(__dirname,'../test_interface');
 // console.log(dirpath);
 
+//THIS FILE IS JUST FOE TESTING PURPOSE
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
 

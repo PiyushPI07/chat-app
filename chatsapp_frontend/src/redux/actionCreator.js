@@ -25,5 +25,7 @@ export const updateMessage = (new_message) => ({
         from:new_message.from,
         to:new_message.to,
         text:new_message.text,
+        type:new_message.type,
+        enc:new_message.enc
     }
 })

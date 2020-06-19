@@ -1,7 +1,6 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, { Component} from 'react';
 import {Row, Col, Container, } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import ScrollToBottom from 'react-scroll-to-bottom';
 import Message from '../message/Message'
 import Inputmsg from '../input/Input'
 import Contacts from '../contacts/Contacts'
@@ -43,7 +42,7 @@ class Chat extends Component{
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({ "from": this.props.reciepient, "to": this.state.loggedInUser });
+        var raw = JSON.stringify({ "to": this.props.reciepient, "from": this.state.loggedInUser });
 
         var requestOptions = {
             method: 'POST',
@@ -56,8 +55,9 @@ class Chat extends Component{
         await fetch("http://localhost:5000/message/history", requestOptions)
             .then(response => response.json())
             .then(async result => {
+                console.log("data from server:",result)
                 await this.props.updateHistory(result);
-                console.log("History from Input.js: ", this.props.history)
+                console.log("History from socket: ", this.props.history)
             })
             .catch(error => console.log('error', error));
 
@@ -96,12 +96,12 @@ class Chat extends Component{
 
 
     Sendmessage = () =>{
-        console.log("Sendmessage invoked")
-        console.log(this.props.message)
+        console.log("Message body in websocket function:", this.props.message)
         let resp = JSON.stringify({
             from:this.state.loggedInUser ,
             to: this.props.reciepient,
-            type: "text",
+            type: this.props.message.type,
+            enc: this.props.message.enc,
             text: this.props.message.text,
             timestamp: Date.now()
         });
@@ -114,8 +114,11 @@ class Chat extends Component{
         }
         else {
             console.log("ws not available");
-            this.buffer.push(resp);
+            if(!this.buffer.includes(resp)){
+                this.buffer.push(resp);
+            }
         }
+        
     }
     
 
@@ -125,19 +128,17 @@ class Chat extends Component{
             <div className="maindiv">
                 <Container fluid className="container  m-md-auto " >
                     <Row>
-                        <Col xs={4}>
+                        <Col xs={4} classname="left-col">
                             <Contacts loggedinUser={this.state.loggedInUser}/>
                         </Col>
-                        <Col xs={8} className="infobar-row">
-                            <Row>
-                            <Infobar username={this.props.reciepient}/>
-                        </Row>
-                        <Row >
-                            <Message loggedInUser = {this.state.loggedInUser}/>
-                        </Row>
-                        <Row className="inputrow">
-                            <Inputmsg sendmessage = {this.Sendmessage} loggedInUser = {this.state.loggedInUser}/>
-                        </Row>
+                        <Col xs={8} className="infobar-row">                            
+                            <Infobar username={this.props.reciepient}/>                            
+                            <Row >
+                                <Message loggedInUser = {this.state.loggedInUser}/>
+                            </Row>
+                            <Row className="inputrow">
+                                <Inputmsg sendmessage = {this.Sendmessage} loggedInUser = {this.state.loggedInUser}/>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>

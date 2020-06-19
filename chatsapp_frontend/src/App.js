@@ -1,9 +1,8 @@
 import React, { Component} from 'react';
 import './App.css'
-import {Route, BrowserRouter} from 'react-router-dom'
+import {Route, BrowserRouter, Switch, Redirect} from 'react-router-dom'
 import Signin from './components/Views/Signin'
 import Signup from './components/Views/Signup'
-import NavBar from './components/NavBar'
 import Chat from './components/Views/chat/Chat'
 import {Provider} from 'react-redux';
 import {ConfigureStore} from './redux/configureStore';
@@ -19,22 +18,21 @@ class App extends Component {
     return(
       <Provider store = {store}>
         <BrowserRouter>
-          <NavBar/>
+          <Switch>
+            <Route exact path="/" >
+              <Signin />
+            </Route>
 
-          <Route path="/signin" >
-            <Signin />
-          </Route>
+            <Route path="/signup" >
+              <Signup />
+            </Route>
 
+            <Route path="/message">
+              <Chat />
+            </Route>
 
-          <Route path="/signup" >
-            <Signup />
-          </Route>
-
-
-          <Route path="/message">
-            <Chat />
-          </Route>
-
+            <Redirect to='/'/>
+          </Switch>
 
         </BrowserRouter>
       </Provider>

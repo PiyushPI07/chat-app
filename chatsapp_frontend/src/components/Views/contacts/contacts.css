@@ -1,18 +1,36 @@
 .scrollbox{
-  height: 800px;
+  height: 600px;
+  background-color: antiquewhite;
   padding: 5% 0;
   overflow: auto;
   flex: auto;
 
 }
 .contact-div::-webkit-scrollbar { width: 0 !important }
-
+.navbar-add{
+  margin-left: 100px;
+  float: right;
+}
 
 .contact-div{
-  height:700px;
-  padding: 5% 0;
+  background-color: antiquewhite;
+  background-attachment: fixed;
+  height:600px !important;
   overflow: auto;
   flex: auto;
 }
+.navbar{
+  background-color: rgb(140, 207, 202) !important;
+  border: .5px ridge;
+  border-color: rgb(73, 155, 141);
+}
 
-
+@media only screen and (max-width: 600px){
+  .brand-logo{
+    display: none;
+  }
+  .navbar-add{
+    margin-left: 10px;
+  float: right;
+}
+}

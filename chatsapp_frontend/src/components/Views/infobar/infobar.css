@@ -5,3 +5,14 @@
 .navbar-brand{
     font-size: medium !important;
 }
+.logout{
+    float: right;   
+    justify-self: right;
+    margin-left: 500px;
+}
+
+@media only screen and (max-width: 600px){
+    .logout{
+        margin-left: 70px !important;
+    }
+}

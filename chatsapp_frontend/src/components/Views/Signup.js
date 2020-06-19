@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useHistory} from 'react-router-dom';
 import M from 'materialize-css'
+import { Card, Row, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Person } from '@material-ui/icons';
+
+
 
 
 
@@ -40,51 +44,66 @@ const Signup = () => {
     }
 
     return (
-        <div className="mycard">
+        <Card className="mycard">
             <div classsname ="card auth-card">
-                <h2  className="brand-logo">ChatsApp</h2>
-                
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        value= {name}
-                        onChange = {e => setName(e.target.value)}
-                         />
-
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}                        
+                <Row className="justify-content-center">
+                    <h2 className="brand-logo">ChatsApp</h2>
+                </Row>
+                <Row className="justify-content-center">
+                  <Person className="icon-person" style={{ fontSize: 120 }} />   
+                </Row>
+                <InputGroup>
+                <Row classname="justify-content-center">
+                        <FormControl 
+                            style={{ margin: "5px 20px 5px 20px" }}
+                            type="text"
+                            placeholder="Name"
+                            value={name}
+                            onChange={e => setName(e.target.value)}
                         />
 
-                    <input
-                        type="text"
-                        placeholder="Password"   
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}                    
+                        <FormControl 
+                            style={{ margin: "5px 20px 5px 20px" }}
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
                         />
 
-                    <input
-                        type="text"
-                        placeholder="Phone"
-                        value={phone}
-                        onChange={e => setPhone(e.target.value)}
-                    />
+                        <FormControl 
+                            style={{ margin: "5px 20px 5px 20px" }}
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
 
+                        <FormControl 
+                            style={{ margin: "5px 20px 5px 20px" }}
+                            type="text"
+                            placeholder="Phone"
+                            value={phone}
+                            onChange={e => setPhone(e.target.value)}
+                        />
+                        <Button className="btn-s waves-effect waves-light" type="submit"
+                                onClick = {() => postInfo()} >Signup
+                        </Button>
+                        <Link to='/signin'>Already have an account?</Link>
+
+                </Row>
+                    
+
+                </InputGroup>
+                   
 
                 <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <button className="btn waves-effect waves-light" type="submit"
-                    onClick = {() => postInfo()} >Signup
-    
-                    </button>
-                    <Link to='/signin'>Already have an account?</Link>
+
                 </div>
                     
             
             
             </div>
-        </div>
+        </Card>
     )
 }
 
