@@ -49,7 +49,6 @@ class Inputmsg extends Component {
             // this.enc = reader.result
             await this.handler(reader.result)
 
-
         }, false)
         
         if(image){
@@ -88,9 +87,7 @@ class Inputmsg extends Component {
         const fileinput = this.fileloader.current.reset()
         console.log("input reset",input)
     }
-    openfileDialog() {
-        this.fileloader.click()
-    }
+
 
     
     render(){

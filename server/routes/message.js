@@ -8,21 +8,31 @@ var path  = require('path');
 const users = [];
 console.log("all users: ", users);
 
-Users.find({},{username:1},(err,res)=> {
-    res.map((usr) => {users.push(usr.username);});
-});
+setInterval(() => {
+    Users.find({}, { username: 1 }, (err, res) => {
+        res.map((usr) => { 
+            if(!users.includes(usr.username)){
+                users.push(usr.username);
+            }
+         });
+    });
+}, 500);
+
+
 
 var clients = {};
+var onlineUsers = []
 console.log("clients: ", clients);
 var undeliveredMessages = {};
 
 
 const TEXT_COMMUNICATION = "text";
+const IMAGE = "img"
 
 
 async function getHistory(from,to){
     if(from != to){
-        return Message.find({ 'to': to, 'from': from }, { _id: 0, from: 1, to: 1, text: 1, timestamp: 1 });
+        return Message.find({ 'to': to, 'from': from }, { _id: 0, from: 1, to: 1, text: 1,type: 1,enc:1, timestamp: 1 });
     }
 }
 
@@ -38,10 +48,15 @@ router.ws("/",function(ws,req){
         return;
     
     }
+
+    // onlineUsers.push(req.user)
     // console.log("req authenticated from message.js")
     ws.user = req.user;
     clients[req.user.username] = ws;
-    console.log(users)
+    if (!onlineUsers.includes(req.user.username)) {
+        onlineUsers.push(req.user.username)
+    }
+    console.log( "Onlineuser:",onlineUsers)
 
 
     if(undeliveredMessages[ws.user.username]){
@@ -58,7 +73,8 @@ router.ws("/",function(ws,req){
     console.log('Clients: '+Object.keys(clients));
     ws.on("message",(msg)=> {
         msg = JSON.parse(msg);
-        console.log(msg);
+        console.log("inside websocket",msg);
+        console.log("users array:", users)
         if(!msg.to || !msg.from || !msg.timestamp ||!msg.type || 
             !users.includes(msg.from) || !users.includes(msg.to))
         {
@@ -76,6 +92,7 @@ router.ws("/",function(ws,req){
                         ws.send('Invalid body');
                         break;
                     }
+
                     if(clients[msg.to])
                     {
                         clients[msg.to].send(JSON.stringify(msg));
@@ -93,6 +110,30 @@ router.ws("/",function(ws,req){
     
                     });
                 }
+                case IMAGE:{
+                    let msg_id;
+
+                    if (!msg.enc) {
+                        ws.send('Invalid body');
+                        break;
+                    }
+                    
+                    if (clients[msg.to]) {
+                        clients[msg.to].send(JSON.stringify(msg));
+                    }
+                    Message(msg).save((err, msg) => {
+                        if (!clients[msg.to]) {
+                            if (undeliveredMessages[msg.to])
+                                undeliveredMessages[msg.to].push(msg._id);
+                            else {
+                                undeliveredMessages[msg.to] = [];
+                                undeliveredMessages[msg.to].push(msg._id);
+                            }
+                            console.log(" Undelivered " + JSON.stringify(undeliveredMessages));
+                        }
+
+                    });
+                }
                 default :
                 {
                     console.log(msg)
@@ -103,6 +144,8 @@ router.ws("/",function(ws,req){
 
     ws.on("close", function (ws, event) {
         if (clients[ws.user.username] != null) {
+            var index = onlineUsers.indexOf(ws.user.username)
+            onlineUsers.splice(index, 1)
             delete clients[ws.user.username];
         }
         console.log('After deleting: ',Object.keys(clients));
@@ -111,7 +154,7 @@ router.ws("/",function(ws,req){
 });
 
 router.get("/clients", (req, res) => {
-    res.send(JSON.stringify(clients));
+    res.send(JSON.stringify(onlineUsers));
 })
 
 router.post("/history", (req, res) => {
@@ -128,19 +171,6 @@ router.post("/history", (req, res) => {
 
 })
 
-router.get("/history",function(req,res,next){
-    console.log(req);
-    if(!req.isAuthenticated()){
-        res.status(401).send("You shall not pass");
-        return;
-    }
-    let otherUser = req.query.otherUser;
-    let me = req.user.username;
 
-    getHistory([otherUser,me],[otherUser,me]).then((msgs)=> {
-        msgs.sort((a,b) => {return a.timestamp - b.timestamp});
-        res.send(JSON.stringify(msgs));
-    });
-});
 
 module.exports = router;
