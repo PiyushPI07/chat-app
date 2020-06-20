@@ -35,6 +35,7 @@ class Chat extends Component{
         this.ws = new WebSocket(this.ws_server + 'message');
         this.buffer = [];
         this.history = [];
+        this.logout = this.logout.bind(this)
     };
 
     async getHistory() {
@@ -121,7 +122,15 @@ class Chat extends Component{
         
     }
     
+    logout =() =>{
 
+        this.ws.close()
+        fetch("http://localhost:5000/auth/logout", { method: "GET" })
+            .then(data => {
+                this.props.history.push('/signin')
+            })
+            .catch(err => console.log(err))
+    }
 
     render() {
         return (
@@ -132,7 +141,7 @@ class Chat extends Component{
                             <Contacts loggedinUser={this.state.loggedInUser}/>
                         </Col>
                         <Col xs={8} className="infobar-row">                            
-                            <Infobar username={this.props.reciepient}/>                            
+                            <Infobar username={this.props.reciepient} logOut={this.logout}/>                            
                             <Row >
                                 <Message loggedInUser = {this.state.loggedInUser}/>
                             </Row>
