@@ -58,33 +58,13 @@
 
 }
 
-.profile-container{
-  display: flex;
-  justify-content: space-around;
-  margin: 18px 0px;
-  border-bottom: gray 1px solid;
-}
 
-.gallary{
-  display: flex;
-  justify-content: space-around;
-  align-content: flex-start;
-  flex-wrap: wrap;
- 
-}
+
+
 .item{
   width: 30%
 }
 
-.home-card{
-  max-width: 40%;
-  margin: 3px auto;
-}
-.post-container{
-  margin: 10px auto;
-  max-width: 40%;
-  padding: 20px;
-}
 
 a{
   color:black!important;

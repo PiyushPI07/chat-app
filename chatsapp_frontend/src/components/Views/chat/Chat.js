@@ -8,6 +8,7 @@ import Infobar from '../infobar/Infobar'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { updateHistory } from "../../../redux/actionCreator";
+import './chat.css'
 
 const mapStateToProps = state => {
     return {

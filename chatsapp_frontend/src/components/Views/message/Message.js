@@ -50,7 +50,7 @@ class Message extends Component{
                 {
                     return(
                         <Card key={msg.timestamp} className="msg-from-client col-offset-left-8 col-4">
-                            <CardBody> {msg.text} </CardBody>
+                            <CardBody className="cardbody"> {msg.text} </CardBody>
                         </Card>
                     )
                 }
@@ -61,14 +61,14 @@ class Message extends Component{
                 if(msg.type == "img"){
                     return (
                         <Card key={msg.timestamp} className='img-to-client '>
-                            <img class="image" src={msg.enc}  alt="video"/>
+                            <img class="image"  src={msg.enc}  alt="video"/>
                         </Card>
                     )
                 }
                 {
                     return (
                         <Card key={msg.timestamp} className='msg-to-client col-offset-8 col-4'>
-                            <CardBody> {msg.text} </CardBody>
+                            <CardBody className="cardbody"> {msg.text} </CardBody>
                         </Card>
                     )
                 }

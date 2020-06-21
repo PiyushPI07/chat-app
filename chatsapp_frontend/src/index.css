@@ -34,13 +34,11 @@ code {
   /* margin: 0px !important; */
   padding: 5px 15px 5px 15px;
 }
-.maindiv{
-  margin-top: 50px !important;
+
+.nvbr{
+  height: 60px;
 }
 
-.infobar-row{
-  margin: 0px !important;
-}
 .btn{
   margin: 5px 15px 5px 5px ;
 }
@@ -57,6 +55,10 @@ code {
 
 .input-bar{
   background-color: rgb(201, 243, 243);
-  margin: 0px 15px 0px 15px !important;
-  padding: 3px 15px 0px 0px;
+  margin: 0px 16px 0px 15px !important;
+  padding: 3px 5px 0px 5px;
+}
+
+@media only screen and (max-width: 600px){
+  
 }

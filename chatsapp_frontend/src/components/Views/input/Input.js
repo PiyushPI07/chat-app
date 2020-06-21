@@ -3,7 +3,7 @@ import {InputGroup,Button, Col, FormControl,  } from 'react-bootstrap';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { updateMessage, updateHistory } from "../../../redux/actionCreator";
-import {CameraAlt, Mic} from '@material-ui/icons'
+import {CameraAlt, Mic, Send} from '@material-ui/icons'
 import './input.css'
 
 const mapStateToProps = state => {
@@ -94,28 +94,28 @@ class Inputmsg extends Component {
         return(
             <InputGroup className="input-bar" >
                 <form className="col-12 row" ref={this.inputref}>
-                    <Col xs={7} md={10} style={{ padding: "4px 5px 2px 5px" }}><FormControl
+                    <Col xs={8} md={10}  style={{ padding: "4px 5px 2px 5px" }}><FormControl
 
                         className="FormControl"
                         type="text"
                         placeholder="Type a message..."
                         onChange={({ target: { value } }) => this.msg = value}
                     ></FormControl></Col>
-                    <Col xs={3} md={1}style={{ padding:"5px 0px 0px 0px"}}>
+                    {/* <Col xs={1} md={0.5}style={{ padding:"5px 0px 0px 0px"}}>
                         <Mic style={{ margin: "5px 0px 0px 0px " }}/>
+                    </Col> */}
+                    <Col xs={2} md={1} style={{ padding: "5px 0px 0px 0px", textAlign: "center" }}>
                         <label>
-                            <form ref = {this.fileloader} >
-                                <input className="fileloader" style={{ display: "none" }} id="fileloader"type="file" onChange={e => this.encrypt(e)}></input>
+                            <form ref={this.fileloader} >
+                                <input className="fileloader" style={{ display: "none" }} id="fileloader" type="file" onChange={e => this.encrypt(e)}></input>
 
                             </form>
-                            <CameraAlt style={{margin: "5px 0px 0px 0px "}}/>
+                            <CameraAlt className="camera" style={{ fontSize: 32 ,margin: "0px 0px 0px 0px " }} />
                         </label>
-                        
-                        {/* <Button onClick={this.openfileDialog}>Upload</Button> */}
                     </Col>
 
-                    <Col xs={1} >
-                        <Button onClick={async () => {
+                    <Col xs={2} md={1} className="send-col">
+                        <Button className="send" onClick={async () => {
                             console.log("toggler on start of button click", this.imagetoggler)
                             var input = window.document.getElementById("fileloader")
                             console.log(input)
@@ -147,7 +147,9 @@ class Inputmsg extends Component {
                             this.resetinput()
                             console.log("toggler on end of button click", this.imagetoggler)
 
-                        }}>send</Button>
+                        }}
+                            style={{fontSize: 13,marginRight: "5px"}}    
+                        >send</Button>
                     </Col>
                 </form>
                     

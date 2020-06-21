@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {Card, Row, Col, Navbar, FormControl} from 'react-bootstrap';
-import {RecentActors, Person, FiberManualRecord} from '@material-ui/icons'
+import {RecentActors, Person, FiberManualRecord, GroupAdd} from '@material-ui/icons'
 import M from 'materialize-css'
 import './contacts.css'
 import { connect } from "react-redux";
@@ -167,10 +167,10 @@ class Contacts extends Component{
                             }}>
                             <Row>
                                 <Col className="justify-content-center" xs={2}>
-                                    <Person />
+                                    <Person style={{ color: "grey" }} />
                                 </Col>
-                                <Col xs={8}>
-                                    <Card.Title style={{paddingLeft: "15px"}} key={user.id}>{user.username}</Card.Title>
+                                <Col xs={8} className="userCol">
+                                    <Card.Title className="username" style={{paddingLeft: "15px"}} key={user.id}>{user.username}</Card.Title>
                                 </Col>
                                 <Col xs={1}>
                                     <FiberManualRecord style={{ fontSize: "20px", color: "green" }} />
@@ -187,10 +187,10 @@ class Contacts extends Component{
                         }}>
                         <Row>
                             <Col className="justify-content-center" xs={2}>
-                                <Person />
+                                <Person style={{color:"grey"}}/>
                             </Col>
-                            <Col xs={10}>
-                                <Card.Title key={user.id}>{user.username}</Card.Title>
+                            <Col xs={8} className="userCol">
+                                <Card.Title className="username" key={user.id}>{user.username}</Card.Title>
                             </Col>
                         </Row>
                     </Card>
@@ -204,10 +204,10 @@ class Contacts extends Component{
 
         return (
             <div >
-                <Navbar className="navbar ">
-                    <RecentActors className="icon" style={{ fontSize: 40 }}/>
+                <Navbar className="navbar nvbr">
+                    <RecentActors className="icon" style={{ fontSize: 30 }}/>
                     <Navbar.Brand className="brand-logo" style={{margin:"5px 5px 5px 15px"}}>Contacts</Navbar.Brand>
-                    <Button className="navbar-add" onClick={this.toggler}>Add</Button>
+                    <GroupAdd className="navbar-add" style={{ fontSize: 40}} onClick={this.toggler}></GroupAdd>
 
                 </Navbar>
         
@@ -216,15 +216,17 @@ class Contacts extends Component{
                 <div className="contact-div">
                     {this.state.add ?
                         <Fragment>
-                            <Row>
-                                <Col xs={8} style={{margin:"0px 0px 0px 20px", padding: "5px 0px 5px 0px"}}>
+                            <Row className="search-row">
+                                <Col xs={8} md={10} className="search-col" >
                                     <FormControl
+                                        className="search"
+                                        style={{fontSize: 10}}
                                         placeholder="Search by phone..."
                                         onChange={e => this.phone = e.target.value}
                                     ></FormControl>
                                 </Col>
-                                <Col xs={3} style={{ margin: "0px",}}>
-                                    <Button style={{height: "38px",}} onClick={this.addcontact}>Add</Button>
+                                <Col xs={4} md={2} className="add-col">
+                                    <Button className="search-add" style={{fontSize: 10}} onClick={this.addcontact}>Add</Button>
                                 </Col>
                             </Row>
 

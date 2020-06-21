@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Navbar, Button ,} from 'react-bootstrap'
-import {Person} from '@material-ui/icons'
+import {Person, ExitToApp} from '@material-ui/icons'
 import {useHistory} from 'react-router-dom'
 import './infobar.css'
 
@@ -15,10 +15,10 @@ const Infobar = (props) => {
 
 
         return(
-            <Navbar className="navbar">
-                <Person style={{fontSize: 50}}/>
+            <Navbar className="navbar nvbr">
+                <Person style={{fontSize: 40, color:"grey"}}/>
                 <Navbar.Brand className="user">{props.username}</Navbar.Brand>
-                <Button className="logout" style={{float: "right", marginLeft:"500px"}}onClick = {() => {props.logOut(); history.push('/signin')}} >Logout</Button>
+                <ExitToApp className="logout" style={{float: "right", marginLeft:"500px", fontSize:30 }}onClick = {() => {props.logOut(); history.push('/signin')}} ></ExitToApp>
             </Navbar>
         )
     
