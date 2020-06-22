@@ -29,3 +29,5 @@ A backend and frontend to a typical chat application like whatsapp. Exposes vari
 - run npm start for both server and frontend.
 - server will be runnning on `localhost:5000`
 - frontend will be running on `localhost:3000`
+
+#App is deployed here: https://chatsapp-client.herokuapp.com/
